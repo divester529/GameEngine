@@ -102,7 +102,7 @@ void Engine::run()
 
   if(shaderProg==0)
     return;
-
+  
   while(running)
   {
     while(SDL_PollEvent(&event))
