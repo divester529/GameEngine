@@ -12,6 +12,9 @@
 
 #include "renderer/shaderLoader.hpp"
 #include "renderer/camera.hpp"
+#include "system/messageBus.hpp"
+#include "system/message.hpp"
+#include "system/system.hpp"
 
 Engine::Engine()
 {
@@ -102,7 +105,15 @@ void Engine::run()
 
   if(shaderProg==0)
     return;
+
+  messanger::MessageBus* msgBus = new messanger::MessageBus();
+  System *test = new System(msgBus);
+  System *test2 = new System(msgBus);
+  msgBus->addSystem(test);
+  msgBus->addSystem(test2);
   
+  msgBus->dispatchMessage(messanger::Message(messanger::KEY_PRESS, "Test"));
+
   while(running)
   {
     while(SDL_PollEvent(&event))
