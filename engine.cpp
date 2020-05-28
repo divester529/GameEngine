@@ -11,6 +11,7 @@
 #include <stdio.h>
 
 #include "renderer/shaderLoader.hpp"
+#include "renderer/camera.hpp"
 
 Engine::Engine()
 {
@@ -37,7 +38,7 @@ bool Engine::init()
   gContext = SDL_GL_CreateContext(gWindow);
   if(!gContext)
   {
-    printf("OpenGL context could not be created! Error: ", SDL_GetError());
+    printf("OpenGL context could not be created! Error: %s", SDL_GetError());
     return false;
   }
 
@@ -101,31 +102,6 @@ void Engine::run()
 
   if(shaderProg==0)
     return;
-
-  glm::mat4 projMat = glm::perspective(glm::radians(45.0f), float(SCREEN_WIDTH)/float(SCREEN_HEIGHT), 0.1f, 100.0f);
-  //glm::mat4 projMat = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
-
-  glm::mat4 viewMat = glm::lookAt(glm::vec3(4,3,3),
-                                  glm::vec3(0,0,0),
-                                  glm::vec3(0,1,0));
-
-  glm::mat4 modelMat = glm::mat4(1.0f);
-
-  glm::mat4 mvp = projMat*viewMat*modelMat;
-
-  glm::vec4 test(1, 1.0f, 1.0f, 1.0f);
-
-  GLuint mvpID = glGetUniformLocation(shaderProg, "MVP");
-  glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
-
-  for(int i = 0; i < 4; i++)
-  {
-    for(int j = 0; j < 4; j++)
-    {
-      printf("%f ", &projMat[i][j]);
-    }
-    printf("\n");
-  }
 
   while(running)
   {
