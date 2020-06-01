@@ -10,23 +10,23 @@
 #include <GL/glext.h>
 #include <stdio.h>
 
-#include "renderer/shaderLoader.hpp"
-#include "renderer/camera.hpp"
+#include "util/shaderLoader.hpp"
 #include "system/messageBus.hpp"
 #include "system/message.hpp"
 #include "system/system.hpp"
 
+#include <string>
 Engine::Engine(): System(messageBus)
 {
   messageBus = new messanger::MessageBus();
-  
   renderer = new render::Renderer(messageBus);
   inputManager = new input::InputManager(messageBus);
+  resourceManager = new util::ResourceManager(messageBus);
 
   messageBus->addSystem(this);
   messageBus->addSystem(renderer);
   messageBus->addSystem(inputManager);
-
+  messageBus->addSystem(resourceManager);
 }
 
 bool Engine::init()
@@ -58,11 +58,24 @@ bool Engine::init()
     printf("Unable to set VSync!");
   }
 
-  if(initGL())
-    return true;
-  else
+  if(!initGL())
     return false;
 
+  GLfloat g_vertex_buffer_data[]={
+    -1.0f, -1.0f, 0.0f,
+    1.0f, -1.0f, 0.0f,
+    0.0f, 1.0f, 0.0f
+  };
+
+  GLuint vertexbuffer;
+
+  glGenBuffers(1, &vertexbuffer);
+  glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+  glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
+
+  renderer->init();
+
+  return true;
 }
 
 bool Engine::initGL()
@@ -108,36 +121,12 @@ void Engine::run()
 {
   running = true;
 
-  GLfloat g_vertex_buffer_data[]={
-    -1.0f, -1.0f, 0.0f,
-    1.0f, -1.0f, 0.0f,
-    0.0f, 1.0f, 0.0f
-  };
-
-  GLuint vertexbuffer;
-
-  glGenBuffers(1, &vertexbuffer);
-  glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-  glBufferData(GL_ARRAY_BUFFER, sizeof(g_vertex_buffer_data), g_vertex_buffer_data, GL_STATIC_DRAW);
-
-  GLuint shaderProg = renderer::loadShaders("shaders/vertShader.glsl", "shaders/fragShader.glsl");
-
-  if(shaderProg==0)
-    return;
-
+  printf("Entering game loop\n");
   while(running)
   {
     inputManager->handleInput();
 
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    glUseProgram(shaderProg);
-
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-    glVertexAttribPointer(0,3,GL_FLOAT,GL_FALSE,0,(void*)0);
-    glDrawArrays(GL_TRIANGLES, 0, 3);
-    glDisableVertexAttribArray(0);
+    renderer->render();
 
     SDL_GL_SwapWindow(gWindow);
   }

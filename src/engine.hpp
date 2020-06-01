@@ -9,6 +9,7 @@
 
 #include "renderer/renderer.hpp"
 #include "input/InputManager.hpp"
+#include "util/resourceManager.hpp"
 #include "system/messageBus.hpp"
 
 class Engine: public System{
@@ -29,6 +30,7 @@ private:
 
   render::Renderer *renderer;
   input::InputManager *inputManager;
+  util::ResourceManager *resourceManager;
 
   SDL_Window* gWindow;
   SDL_GLContext gContext;

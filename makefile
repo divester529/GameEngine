@@ -1,7 +1,8 @@
 src = $(wildcard src/*.cpp) \
 			$(wildcard src/renderer/*.cpp) \
 			$(wildcard src/system/*.cpp) \
-			$(wildcard src/input/*.cpp)
+			$(wildcard src/input/*.cpp) \
+			$(wildcard src/util/*.cpp)
 obj = $(src:.cpp=.o)
 CC = g++
 
@@ -14,6 +15,9 @@ all: $(TARGET)
 
 run: all
 	./game.exe
+
+clean:
+	rm -f $(obj) myprog
 
 $(TARGET): $(obj)
 	$(CC) $(CFLAGS) -o $(TARGET) $^ $(LDFLAGS)

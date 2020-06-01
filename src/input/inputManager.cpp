@@ -14,7 +14,7 @@ namespace input
         break;
         case SDL_KEYDOWN:
           messageBus->dispatchMessage(messanger::Message(messanger::KEY_PRESSED, std::to_string(event.key.keysym.sym)));
-          break;
+         break;
       }
     }
   }

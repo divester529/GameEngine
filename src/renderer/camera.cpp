@@ -6,12 +6,11 @@ namespace render
   Camera::Camera()
   {
     // Get reference to current shader program
-    shaderProg;
     glGetIntegerv(GL_CURRENT_PROGRAM, &shaderProg);
 
     projMat = glm::perspective(glm::radians(45.0f), float(SCREEN_WIDTH)/float(SCREEN_HEIGHT), 0.1f, 100.0f);
 
-    modelMat = glm::mat4(1.0f);
+    //modelMat = glm::mat4(1.0f);
 
     pos = glm::vec3(0, -1, 1);
 
@@ -38,11 +37,15 @@ namespace render
 
   void Camera::useCamera()
   {
+    glm::mat4 matrix = projMat*viewMat;
 
-    glm::mat4 mvp = projMat*viewMat*modelMat;
+    GLuint cameraID = glGetUniformLocation(shaderProg, "camera");
+    glUniformMatrix4fv(cameraID, 1, GL_FALSE, &matrix[0][0]);
+  }
 
-    GLuint mvpID = glGetUniformLocation(shaderProg, "MVP");
-    glUniformMatrix4fv(mvpID, 1, GL_FALSE, &mvp[0][0]);
+  void Camera::onShaderUpdate()
+  {
+    glGetIntegerv(GL_CURRENT_PROGRAM, &shaderProg);
   }
 
   void Camera::updateViewMatrix()
@@ -63,6 +66,5 @@ namespace render
       glm::vec4(xAxis[1], yAxis[1], zAxis[1], 0),
       glm::vec4(-glm::dot(xAxis, pos), -glm::dot(yAxis, pos), -glm::dot(zAxis, pos), 1)
     );
-
   }
 }

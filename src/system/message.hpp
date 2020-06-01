@@ -5,9 +5,17 @@
 namespace messanger
 {
 
-  enum MSG_TYPE {KEY_PRESSED, APPLICATION_EXIT};
-  static const char* msg_types[] = {"KEY_PRESSED", "APPLICATION EXIT"};
-
+  enum MSG_TYPE {
+    KEY_PRESSED,
+    APPLICATION_EXIT,
+    TEXTURE_LOAD,
+    TEXTURE_GET,
+    SHADER_LOAD,
+    SHADER_GET,
+    SHADER_POST,
+    SHADER_NOT_FOUND
+  };
+  
   struct Message{
 
     Message(MSG_TYPE _msg_type)

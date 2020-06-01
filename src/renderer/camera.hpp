@@ -21,6 +21,7 @@ namespace render
     void pitch(float rads);
 
     void useCamera(); // Applies MVP matrix to the shader program
+    void onShaderUpdate(); // Updates the uniform target when shader changes
 
   private:
     glm::mat4 projMat;

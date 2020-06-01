@@ -24,7 +24,7 @@ GLuint loadShaders(const char* vert_shader_path, const char* frag_shader_path)
     vertShaderStream.close();
   }
   else{
-    printf("Could not open file %s", vert_shader_path);
+    printf("Could not open file %s\n", vert_shader_path);
     return 0;
   }
 
@@ -38,7 +38,7 @@ GLuint loadShaders(const char* vert_shader_path, const char* frag_shader_path)
     fragShaderStream.close();
   }
   else{
-    printf("Could not open file %s", frag_shader_path);
+    printf("Could not open file %s\n", frag_shader_path);
     return 0;
   }
 
