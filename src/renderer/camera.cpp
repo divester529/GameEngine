@@ -8,9 +8,9 @@ namespace render
     // Get reference to current shader program
     glGetIntegerv(GL_CURRENT_PROGRAM, &shaderProg);
 
-    projMat = glm::perspective(glm::radians(45.0f), float(SCREEN_WIDTH)/float(SCREEN_HEIGHT), 0.1f, 100.0f);
-
-    //modelMat = glm::mat4(1.0f);
+    //projMat = glm::perspective(glm::radians(45.0f), float(SCREEN_WIDTH)/float(SCREEN_HEIGHT), 0.1f, 100.0f);
+    projMat = glm::ortho(0.0f, 640.0f, 480.0f, 0.0f, 0.0f, 100.0f);
+    modelMat = glm::mat4(1.0f);
 
     pos = glm::vec3(0, -1, 1);
 
@@ -37,7 +37,7 @@ namespace render
 
   void Camera::useCamera()
   {
-    glm::mat4 matrix = projMat*viewMat;
+    glm::mat4 matrix = projMat*viewMat*modelMat;
 
     GLuint cameraID = glGetUniformLocation(shaderProg, "camera");
     glUniformMatrix4fv(cameraID, 1, GL_FALSE, &matrix[0][0]);
@@ -50,6 +50,7 @@ namespace render
 
   void Camera::updateViewMatrix()
   {
+    /*
     float cosPitch = cos(_pitch);
     float sinPitch = sin(_pitch);
 
@@ -65,6 +66,13 @@ namespace render
       glm::vec4(xAxis[1], yAxis[1], zAxis[1], 0),
       glm::vec4(xAxis[1], yAxis[1], zAxis[1], 0),
       glm::vec4(-glm::dot(xAxis, pos), -glm::dot(yAxis, pos), -glm::dot(zAxis, pos), 1)
+    );
+    */
+
+    viewMat = glm::lookAt(
+      glm::vec3(0,0,3),
+      glm::vec3(0,0,0),
+      glm::vec3(0,1,0)
     );
   }
 }

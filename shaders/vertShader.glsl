@@ -6,5 +6,5 @@ uniform mat4 camera;
 uniform mat4 model;
 
 void main(){
-  gl_Position = model*camera*vec4(vertexPosition_modelspace,1);
+  gl_Position = camera*model*vec4(vertexPosition_modelspace,1);
 }

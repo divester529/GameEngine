@@ -1,6 +1,9 @@
 #ifndef TRANSFORMMATRIX_H_INCLUDED
 #define TRANSFORMMATRIX_H_INCLUDED
+#include <GL/GLew.h>
+#include <GL/GL.h>
 #include <GLM/GLM.hpp>
+#include <GLM/ext.hpp>
 
 namespace render
 {
@@ -11,16 +14,19 @@ namespace render
     TransformMatrix();
 
     void translate(glm::vec3 delta);
-    void yaw(float rads);
-    void pitch(float rads);
+
+    void setScale(GLfloat _scale);
 
     glm::mat4 matrix;
   private:
     void updateMatrix();
 
-    glm::vec3 translation;
-    glm::vec3 scale;
-    float _yaw, _pitch;
+    glm::vec3 position;
+    glm::vec3 rotation;
+
+    glm::mat4 translation;
+    glm::mat4 scale;
+    glm::mat4 identity;
   };
 
 }

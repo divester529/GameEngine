@@ -1,47 +1,30 @@
 #include "transformMatrix.hpp"
+#include <glm/ext.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/transform.hpp>
 
 namespace render
 {
   TransformMatrix::TransformMatrix()
   {
+    position = glm::vec3(32.0f, 32.0f, 0.0f);
+
+    identity=glm::mat4(1.0f);
+    scale = glm::scale(glm::mat4(1.0f), glm::vec3(32.0f, -32.0f, 32.0f));
     matrix = glm::mat4(1.0f);
+
+    updateMatrix();
   }
 
   void TransformMatrix::translate(glm::vec3 delta)
   {
-    translation=translation+delta;
-    updateMatrix();
-  }
-
-  void TransformMatrix::yaw(float rads)
-  {
-    _yaw+=rads;
-    updateMatrix();
-  }
-
-  void TransformMatrix::pitch(float rads)
-  {
-    _pitch+=rads;
+    position = position+delta;
     updateMatrix();
   }
 
   void TransformMatrix::updateMatrix()
   {
-    float cosPitch = cos(_pitch);
-    float sinPitch = sin(_pitch);
-
-    float cosYaw = cos(_yaw);
-    float sinYaw = sin(_yaw);
-
-    glm::vec3 xAxis(cosYaw, 0, -sinYaw);
-    glm::vec3 yAxis(sinYaw*sinPitch, cosPitch, cosYaw);
-    glm::vec3 zAxis(sinYaw*cosPitch, -sinPitch, cosPitch);
-
-    matrix = glm::mat4(
-      glm::vec4(xAxis[0], yAxis[0], zAxis[0], 0),
-      glm::vec4(xAxis[1], yAxis[1], zAxis[1], 0),
-      glm::vec4(xAxis[1], yAxis[1], zAxis[1], 0),
-      glm::vec4(-glm::dot(xAxis, translation), -glm::dot(yAxis, translation), -glm::dot(zAxis, translation), 1)
-    );
+    translation=glm::translate(glm::mat4(), position);
+    matrix = translation*scale;
   }
 }
