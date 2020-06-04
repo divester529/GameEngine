@@ -2,7 +2,7 @@
 #include <fstream>
 #include <stdio.h>
 
-GLuint loadBitmap(std::string path)
+TextureData loadBitmap(std::string path)
 {
   FILE* bmpFile = fopen(path.c_str(), "r");
 
@@ -18,9 +18,11 @@ GLuint loadBitmap(std::string path)
 
   if(header[0]!='B' & header[1]!= 'M')
   {
-      printf("File %s is an invalid bitmap image!", path);
+      printf("File %s is an invalid bitmap image!", path.c_str());
 
   }
+
+  printf("still not crashed\n");
 
   int dataPos=*(int*)&(header[0x0A]);
   int imageSize=*(int*)&(header[0x22]);
@@ -41,31 +43,22 @@ GLuint loadBitmap(std::string path)
 
   fread(tempData, 1, imageSize, bmpFile);
 
-  // This is some confusing shit, dawg, I don't even know why it works
-  for(int i = 0; i < height*width*3; i+=width*3)
-  {
-      for(int j = 0; j < width*3; j++)
-      {
-          data[i+j]=tempData[(height-1)*width*3-i+j];
-      }
-  }
-
-  delete[] tempData;
-
   GLuint id;
-  
+
   glGenTextures(1, &id);
 
   glEnable(GL_TEXTURE_2D);
 
   glBindTexture(GL_TEXTURE_2D, id);
 
-  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, data);
+  glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_BGR_EXT, GL_UNSIGNED_BYTE, tempData);
 
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
   fclose(bmpFile);
 
-  return id;
+  TextureData texData(id, width, height);
+
+  return texData;
 }

@@ -6,6 +6,8 @@ namespace messanger{
     "APPLICATION EXIT",
     "TEXTURE_LOAD",
     "TEXTURE_GET",
+    "TEXTURE_POST",
+    "TEXTURE_NOT_FOUND",
     "SHADER_LOAD",
     "SHADER_GET",
     "SHADER_POST",

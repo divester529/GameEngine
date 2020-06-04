@@ -10,12 +10,14 @@ namespace messanger
     APPLICATION_EXIT,
     TEXTURE_LOAD,
     TEXTURE_GET,
+    TEXTURE_POST,
+    TEXTURE_NOT_FOUND,
     SHADER_LOAD,
     SHADER_GET,
     SHADER_POST,
     SHADER_NOT_FOUND
   };
-  
+
   struct Message{
 
     Message(MSG_TYPE _msg_type)

@@ -16,6 +16,7 @@ namespace render{
   private:
     GLint shaderProg;
     GLuint vbo;
+    GLuint vao;
 
     float yaw, pitch;
     glm::vec3 position;

@@ -1,6 +1,7 @@
 #include "resourceManager.hpp"
 #include "../system/message.hpp"
 #include "shaderLoader.hpp"
+#include "textureLoader.hpp"
 
 namespace util{
   void ResourceManager::handleMessage(messanger::Message* msg)
@@ -34,6 +35,26 @@ namespace util{
     }catch(const std::out_of_range& exception){
       printf("Out of Range error: %s\n", exception.what());
       messageBus->dispatchMessage(messanger::Message(messanger::SHADER_NOT_FOUND));
+    }
+  }
+
+  void ResourceManager::loadTexture(std::string key, std::string path)
+  {
+    printf("Loading bitmap %s as %s\n", path.c_str(), key.c_str());
+
+    TextureData texture = loadBitmap(path);
+    textureData.insert( std::pair<std::string, TextureData>(key, texture));
+  }
+
+  void ResourceManager::getTexture(std::string key)
+  {
+    printf("Getting texture %s\n", key.c_str());
+    try{
+      TextureData tex = textureData[key.c_str()];
+      messageBus->dispatchMessage(messanger::Message(messanger::TEXTURE_POST, std::to_string(tex.id), &tex));
+    }catch(const std::out_of_range& exception){
+      printf("Out of Range error: %s\n", exception.what());
+      messageBus->dispatchMessage(messanger::Message(messanger::TEXTURE_NOT_FOUND));
     }
   }
 }
