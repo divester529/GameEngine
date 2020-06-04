@@ -8,8 +8,11 @@ out vec2 UV;
 uniform mat4 camera;
 uniform mat4 model;
 
+uniform vec2 offset;
+uniform float numRows;
+
 void main(){
   gl_Position = camera*model*vec4(vertexPosition_modelspace,1);
 
-  UV = vertexUV;
+  UV = (vertexUV/numRows)+(offset/numRows);
 }

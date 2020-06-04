@@ -13,6 +13,8 @@ namespace render{
     RenderObject();
 
     virtual void render();
+
+    TransformMatrix transformMat;
   private:
     GLint shaderProg;
     GLuint vbo;
@@ -20,8 +22,6 @@ namespace render{
 
     float yaw, pitch;
     glm::vec3 position;
-
-    TransformMatrix transformMat;
   };
 
 }

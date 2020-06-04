@@ -1,5 +1,5 @@
 #include "RenderObject.hpp"
-#include "../util/textureLoader.hpp"
+#include "../util/textureAtlas.hpp"
 
 namespace render
 {
@@ -19,11 +19,13 @@ namespace render
       1.0f, 1.0f
     };
 
-    loadBitmap("res/test.bmp");
+    TextureAtlas tl("res/test.bmp", 2);
+    tl.useTexture();
+    tl.setFrame(1);
 
-    GLuint tex;
-    glGenBuffers(1, &tex);
-    glBindBuffer(GL_ARRAY_BUFFER, tex);
+    GLuint texCoordArray;
+    glGenBuffers(1, &texCoordArray);
+    glBindBuffer(GL_ARRAY_BUFFER, texCoordArray);
     glBufferData(GL_ARRAY_BUFFER, sizeof(texCoord), texCoord, GL_STATIC_DRAW);
 
     glGenVertexArrays(1, &vao);
@@ -32,15 +34,15 @@ namespace render
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, tex);
+    glBindBuffer(GL_ARRAY_BUFFER, texCoordArray);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
   }
 
   void RenderObject::render()
   {
-
-    GLuint transID = glGetUniformLocation(shaderProg, "model");
-    glUniformMatrix4fv(transID, 1, GL_FALSE, &transformMat.matrix[0][0]);
+    glGetIntegerv(GL_CURRENT_PROGRAM, &shaderProg);
+    GLuint transLoc = glGetUniformLocation(shaderProg, "model");
+    glUniformMatrix4fv(transLoc, 1, GL_FALSE, &transformMat.matrix[0][0]);
 
     glBindVertexArray(vao);
     glDrawArrays(GL_TRIANGLES, 0, 6);
