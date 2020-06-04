@@ -21,7 +21,7 @@ namespace render
 
     TextureAtlas tl("res/test.bmp", 2);
     tl.useTexture();
-    tl.setFrame(1);
+    tl.setFrame(0);
 
     GLuint texCoordArray;
     glGenBuffers(1, &texCoordArray);
