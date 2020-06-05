@@ -1,6 +1,7 @@
 #include "system.hpp"
 
 namespace messanger{
+  
   static const char* msg_types[] = {
     "KEY_PRESSED",
     "APPLICATION EXIT",
@@ -8,6 +9,10 @@ namespace messanger{
     "TEXTURE_GET",
     "TEXTURE_POST",
     "TEXTURE_NOT_FOUND",
+    "TEXTURE_ATLAS_LOAD",
+    "TEXTURE_ATLAS_GET",
+    "TEXTURE_ATLAS_POST",
+    "TEXTURE_ATLAS_NOT_FOUND",
     "SHADER_LOAD",
     "SHADER_GET",
     "SHADER_POST",

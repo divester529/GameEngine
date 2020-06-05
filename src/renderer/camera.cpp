@@ -68,10 +68,10 @@ namespace render
       glm::vec4(-glm::dot(xAxis, pos), -glm::dot(yAxis, pos), -glm::dot(zAxis, pos), 1)
     );
     */
-
+    printf("%f %f\n", pos[0], pos[1]);
     viewMat = glm::lookAt(
-      glm::vec3(0,0,3),
-      glm::vec3(0,0,0),
+      glm::vec3(pos[0],pos[1],3),
+      glm::vec3(pos[0],pos[1],0),
       glm::vec3(0,1,0)
     );
   }

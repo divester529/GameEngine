@@ -67,7 +67,21 @@ bool Engine::init()
     32.0f, 0.0f, 0.0f,
     32.0f, 0.0f, 0.0f,
     0.0f, 32.0f, 0.0f,
-    32.0f, 32.0f, 0.0f
+    32.0f, 32.0f, 0.0f,
+
+    32.0f, 0.0f, 0.0f,
+    32.0f, 32.0f, 0.0f,
+    64.0f, 0.0f, 0.0f,
+    64.0f, 0.0f, 0.0f,
+    32.0f, 32.0f, 0.0f,
+    64.0f, 32.0f, 0.0f,
+
+    32.0f, 0.0f, 0.0f,
+    32.0f, 32.0f, 0.0f,
+    64.0f, 0.0f, 0.0f,
+    64.0f, 0.0f, 0.0f,
+    32.0f, 32.0f, 0.0f,
+    64.0f, 32.0f, 0.0f
   };
 
   GLuint vertexbuffer;
@@ -106,7 +120,7 @@ bool Engine::initGL()
     printf("OpenGL version 3.3 supported\n");
   }
 
-  glClearColor(0.5f, 0.5f, 1.0f, 1.0f);
+  //glClearColor(0.5f, 0.5f, 1.0f, 1.0f);
   return true;
 }
 

@@ -6,6 +6,7 @@
 #include <map>
 #include <string>
 #include "../system/system.hpp"
+#include "textureAtlas.hpp"
 #include "textureLoader.hpp"
 
 namespace util{
@@ -17,14 +18,20 @@ namespace util{
     std::map<std::string, GLuint> shaderPrograms;
     std::map<std::string, GLuint> meshes;
     std::map<std::string, TextureData> textureData;
+    std::map<std::string, TextureAtlas> textureAtlas;
 
     void handleMessage(messanger::Message* msg);
 
     void loadShaderProgram(std::string key, std::string path[]);
-    void getShaderProgram(std::string key);
+    GLuint getShaderProgram(std::string key);
 
     void loadTexture(std::string key, std::string path);
-    void getTexture(std::string key);
+    TextureData getTexture(std::string key);
+
+    void loadTextureAtlas(std::string key, std::string path);
+    void loadTextureAtlas(std::string key, std::string path, int numRows);
+    TextureAtlas getTextureAtlas(std::string key);
+
   };
 }
 #endif // RESOURCEMANAGER_H_INCLUDED

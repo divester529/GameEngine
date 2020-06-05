@@ -73,7 +73,7 @@ GLuint loadShaders(const char* vert_shader_path, const char* frag_shader_path)
   if(infoLogLength>0){
     std::vector<char> fragShaderErrMsg(infoLogLength+1);
     glGetShaderInfoLog(fragShaderID, infoLogLength, NULL, &fragShaderErrMsg[0]);
-    printf("Error compiling fragment shader: %s\n", &fragShaderErrMsg);
+    printf("Error compiling fragment shader: %s\n", &fragShaderErrMsg[0]);
 
     return 0;
   }

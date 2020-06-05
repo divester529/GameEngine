@@ -7,6 +7,7 @@
 #include "../system/messageBus.hpp"
 #include "renderObject.hpp"
 #include "camera.hpp"
+#include "../util/tileMapAsset.hpp"
 
 namespace render{
   class Renderer: public System
@@ -23,10 +24,10 @@ namespace render{
   private:
     std::vector<RenderObject*> renderObjects;
     Camera* camera;
-
+    TileMapAsset *tmTest;
     GLuint shaderProg;
   };
-  
+
 }
 
 #endif // RENDERER_H_INCLUDED

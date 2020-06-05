@@ -45,7 +45,7 @@ namespace render
     glUniformMatrix4fv(transLoc, 1, GL_FALSE, &transformMat.matrix[0][0]);
 
     glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, 6);
+    glDrawArrays(GL_TRIANGLES, 0, 18);
     //glDisableVertexAttribArray(0);
   }
 

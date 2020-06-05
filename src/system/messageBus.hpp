@@ -15,7 +15,7 @@ namespace messanger
     void dispatchMessage(Message msg);
 
     void test();
-    
+
     void addSystem(System* system);
   private:
     std::list<System* > systems;

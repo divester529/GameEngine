@@ -19,16 +19,16 @@ namespace render{
         switch(std::stoi(msg->msg_value))
         {
           case 119:
-            camera->move(glm::vec3(0, 0, 0.05));
+            camera->move(glm::vec3(0, 5, 0));
           break;
           case 115:
-            printf("s\n");
+            camera->move(glm::vec3(0, -5, 0));
           break;
           case 100:
-            printf("d\n");
+            camera->move(glm::vec3(5, 0, 0));
           break;
           case 97:
-            printf("a\n");
+            camera->move(glm::vec3(-5, 0, 0));
           break;
         }
       break;
@@ -55,6 +55,8 @@ namespace render{
     renderObjects.push_back(new RenderObject());
 
     printf("renderObjects length: %i\n", renderObjects.size());
+
+    tmTest = new TileMapAsset("test", 4, 4, NULL);
   }
 
   // Draw the current scene
@@ -64,6 +66,9 @@ namespace render{
 
     glUseProgram(shaderProg);
     camera->useCamera();
+
+    glBindVertexArray(tmTest->vao);
+    glDrawArrays(GL_TRIANGLES, 0, tmTest->numVerticies);
 
     for(std::vector<RenderObject* >::iterator it = renderObjects.begin(); it != renderObjects.end(); ++it)
     {

@@ -7,6 +7,7 @@
 
 class TextureAtlas{
 public:
+  TextureAtlas(){}
   TextureAtlas(std::string path);
   TextureAtlas(std::string path, int _numRows);
 
@@ -14,7 +15,6 @@ public:
   void setFrame(int index);
 private:
   TextureData texture;
-
   int numRows;
 };
 
