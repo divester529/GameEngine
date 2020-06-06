@@ -3,6 +3,7 @@
 #include <string>
 #include <GL/GLew.h>
 #include <GL/GL.h>
+#include <glm/glm.hpp>
 #include "textureLoader.hpp"
 
 class Tileset

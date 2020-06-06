@@ -19,7 +19,7 @@ namespace render
       1.0f, 1.0f
     };
 
-    TextureAtlas tl("res/test.bmp", 2);
+    TextureAtlas tl("res/tilest1.bmp", 1);
     tl.useTexture();
     tl.setFrame(0);
 
@@ -45,7 +45,7 @@ namespace render
     glUniformMatrix4fv(transLoc, 1, GL_FALSE, &transformMat.matrix[0][0]);
 
     glBindVertexArray(vao);
-    glDrawArrays(GL_TRIANGLES, 0, 18);
+    glDrawArrays(GL_TRIANGLES, 0, 6);
     //glDisableVertexAttribArray(0);
   }
 

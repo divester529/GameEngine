@@ -33,7 +33,7 @@ namespace render{
         }
       break;
       case messanger::SHADER_POST:
-        printf("Changing shaders!\n");
+        //printf("Changing shaders!\n");
         shaderProg = stoi(msg->msg_value);
         glUseProgram(shaderProg);
       break;
@@ -47,6 +47,10 @@ namespace render{
 
     messageBus->dispatchMessage(messanger::Message(messanger::SHADER_LOAD, "default", test));
 
+    std::string test2[]={"shaders/tilemapVertShader.glsl", "shaders/fragShader.glsl"};
+
+    messageBus->dispatchMessage(messanger::Message(messanger::SHADER_LOAD, "tilemap", test2));
+
     messageBus->dispatchMessage(messanger::Message(messanger::SHADER_GET, "default"));
 
     camera = new Camera();
@@ -55,24 +59,30 @@ namespace render{
     renderObjects.push_back(new RenderObject());
 
     printf("renderObjects length: %i\n", renderObjects.size());
+    Tileset *ts = new Tileset("res/tilest1.bmp", 2);
 
-    tmTest = new TileMapAsset("test", 4, 4, NULL);
+    tmTest = new TileMapAsset("test", 20, 20, ts);
   }
 
   // Draw the current scene
   void Renderer::render()
   {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    messageBus->dispatchMessage(messanger::Message(messanger::SHADER_GET, "default"));
 
-    glUseProgram(shaderProg);
     camera->useCamera();
-
-    glBindVertexArray(tmTest->vao);
-    glDrawArrays(GL_TRIANGLES, 0, tmTest->numVerticies);
 
     for(std::vector<RenderObject* >::iterator it = renderObjects.begin(); it != renderObjects.end(); ++it)
     {
       (*it)->render();
     }
+
+    messageBus->dispatchMessage(messanger::Message(messanger::SHADER_GET, "tilemap"));
+    camera->useCamera();
+    GLuint numRowsLoc = glGetUniformLocation(shaderProg, "numRows");
+    glUniform1f(numRowsLoc, 2);
+
+    glBindVertexArray(tmTest->vao);
+    glDrawArrays(GL_TRIANGLES, 0, tmTest->numVerticies);
   }
 }

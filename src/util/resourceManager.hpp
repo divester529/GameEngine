@@ -8,6 +8,7 @@
 #include "../system/system.hpp"
 #include "textureAtlas.hpp"
 #include "textureLoader.hpp"
+#include "tileMapAsset.hpp"
 
 namespace util{
   class ResourceManager: public System
@@ -32,6 +33,8 @@ namespace util{
     void loadTextureAtlas(std::string key, std::string path, int numRows);
     TextureAtlas getTextureAtlas(std::string key);
 
+    void loadTileMap(std::string key, std::string path);
+    void getTileMap(std::string key);
   };
 }
 #endif // RESOURCEMANAGER_H_INCLUDED

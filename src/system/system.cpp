@@ -1,7 +1,7 @@
 #include "system.hpp"
 
 namespace messanger{
-  
+
   static const char* msg_types[] = {
     "KEY_PRESSED",
     "APPLICATION EXIT",
@@ -26,5 +26,5 @@ System::System(messanger::MessageBus* _messageBus)
 
 void System::handleMessage(messanger::Message* msg)
 {
-  printf("Message type: %s Message value: %s\n", messanger::msg_types[msg->msg_type], msg->msg_value.c_str());
+  //printf("Message type: %s Message value: %s\n", messanger::msg_types[msg->msg_type], msg->msg_value.c_str());
 }

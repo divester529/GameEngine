@@ -22,8 +22,10 @@ void TextureAtlas::useTexture()
 void TextureAtlas::setFrame(int index)
 {
   int frameSize=texture.width/numRows;
-  int offsetX=(index*frameSize)%texture.width;
-  int offsetY=(texture.height/2)-(index*frameSize)/texture.width;
+  float offsetX=index%numRows;
+  float offsetY=index/numRows;
+  printf("Framesize %i\n", frameSize);
+  printf("%f, %f\n", offsetX, offsetY);
 
   glm::vec2 offset((float)offsetX, (float)offsetY);
 

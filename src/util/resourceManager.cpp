@@ -21,7 +21,7 @@ namespace util{
         getTexture(msg->msg_value);
       break;
       case messanger::TEXTURE_ATLAS_LOAD:
-
+        loadTextureAtlas(msg->msg_value, *(std::string*)msg->msg_data);
       break;
       case messanger::TEXTURE_ATLAS_GET:
 
@@ -40,7 +40,7 @@ namespace util{
 
   GLuint ResourceManager::getShaderProgram(std::string key)
   {
-    printf("Getting shader %s\n", key.c_str());
+    //printf("Getting shader %s\n", key.c_str());
     try{
       GLuint progID = shaderPrograms[key.c_str()];
       messageBus->dispatchMessage(messanger::Message(messanger::SHADER_POST, std::to_string(progID)));
