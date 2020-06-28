@@ -65,9 +65,14 @@ bool Engine::init()
     0.0f, 0.0f, 0.0f,
     0.0f, 32.0f, 0.0f,
     32.0f, 0.0f, 0.0f,
-    32.0f, 0.0f, 0.0f,
-    0.0f, 32.0f, 0.0f,
-    32.0f, 32.0f, 0.0f
+    32.0f, 32.0f, 0.0f,
+    
+    0.0f, 0.0f, 32.0f,
+    0.0f, 32.0f, 32.0f,
+    32.0f, 0.0f, 32.0f,
+    32.0f, 0.0f, 32.0f,
+    0.0f, 32.0f, 32.0f,
+    32.0f, 32.0f, 32.0f
   };
 
   GLuint vertexbuffer;
@@ -107,6 +112,7 @@ bool Engine::initGL()
   }
 
   //glClearColor(0.5f, 0.5f, 1.0f, 1.0f);
+  glEnable(GL_DEPTH_TEST);
   return true;
 }
 

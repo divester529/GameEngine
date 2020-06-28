@@ -17,6 +17,7 @@ namespace render
     Camera();
 
     void move(glm::vec3 delta);
+    void move(float delta);
     void yaw(float rads);
     void pitch(float rads);
 

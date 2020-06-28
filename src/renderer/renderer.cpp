@@ -19,16 +19,25 @@ namespace render{
         switch(std::stoi(msg->msg_value))
         {
           case 119:
-            camera->move(glm::vec3(0, 5, 0));
+            camera->move(-5);
           break;
           case 115:
-            camera->move(glm::vec3(0, -5, 0));
+            //camera->move(glm::vec3(0, -5, 0));
+            camera->move(5);
           break;
           case 100:
-            camera->move(glm::vec3(5, 0, 0));
+            //camera->move(glm::vec3(5, 0, 0));
+            camera->yaw(-0.2);
           break;
           case 97:
-            camera->move(glm::vec3(-5, 0, 0));
+            //camera->move(glm::vec3(-5, 0, 0));
+            camera->yaw(0.2);
+          break;
+          case 101:
+            camera->pitch(-0.02);
+          break;
+          case 113:
+            camera->pitch(0.02);
           break;
         }
       break;
@@ -55,13 +64,13 @@ namespace render{
 
     camera = new Camera();
 
-    renderObjects.push_back(new RenderObject());
-    renderObjects.push_back(new RenderObject());
+    renderables.push_back(new Renderable());
+    renderables.push_back(new Renderable());
 
-    printf("renderObjects length: %i\n", renderObjects.size());
-    Tileset *ts = new Tileset("res/tilest1.bmp", 2);
+    printf("Renderables length: %i\n", renderables.size());
+    Tileset *ts = new Tileset("res/tileset1.bmp", 3);
 
-    tmTest = new TileMapAsset("test", 20, 20, ts);
+    tmTest = new TileMapAsset("test.txt", 10, 10, ts);
   }
 
   // Draw the current scene
@@ -72,17 +81,17 @@ namespace render{
 
     camera->useCamera();
 
-    for(std::vector<RenderObject* >::iterator it = renderObjects.begin(); it != renderObjects.end(); ++it)
-    {
-      (*it)->render();
-    }
-
     messageBus->dispatchMessage(messanger::Message(messanger::SHADER_GET, "tilemap"));
     camera->useCamera();
     GLuint numRowsLoc = glGetUniformLocation(shaderProg, "numRows");
-    glUniform1f(numRowsLoc, 2);
+    glUniform1f(numRowsLoc, 3);
 
     glBindVertexArray(tmTest->vao);
     glDrawArrays(GL_TRIANGLES, 0, tmTest->numVerticies);
+
+    for(std::vector<Renderable* >::iterator it = renderables.begin(); it != renderables.end(); ++it)
+    {
+      (*it)->render();
+    }
   }
 }

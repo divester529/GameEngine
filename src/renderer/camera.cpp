@@ -8,11 +8,13 @@ namespace render
     // Get reference to current shader program
     glGetIntegerv(GL_CURRENT_PROGRAM, &shaderProg);
 
-    //projMat = glm::perspective(glm::radians(45.0f), float(SCREEN_WIDTH)/float(SCREEN_HEIGHT), 0.1f, 100.0f);
-    projMat = glm::ortho(0.0f, 640.0f, 480.0f, 0.0f, 0.0f, 100.0f);
-    modelMat = glm::mat4(1.0f);
+    projMat = glm::perspective(glm::radians(45.0f), float(SCREEN_WIDTH)/float(SCREEN_HEIGHT), 0.1f, 1000.0f);
+    //projMat = glm::ortho(0.0f, 640.0f, 480.0f, 0.0f, 0.0f, 100.0f);
+    modelMat = glm::mat4(1.f);
+    _pitch=_yaw=0;
+    _pitch=-0.2;
 
-    pos = glm::vec3(0, -1, 1);
+    pos = glm::vec3(32.0f, 16.0f, 200);
 
     updateViewMatrix(); // compute the original view matrix
   }
@@ -23,9 +25,23 @@ namespace render
     updateViewMatrix();
   }
 
+  void Camera::move(float delta)
+  {
+    float cosPitch = cos(_pitch);
+    float sinPitch = sin(_pitch);
+
+    float cosYaw = cos(_yaw);
+    float sinYaw = sin(_yaw);
+
+    pos[0]+=delta*sinYaw;
+    pos[2]+=delta*cosYaw;
+    updateViewMatrix();
+  }
+
   void Camera::pitch(float rads)
   {
     _pitch+=rads;
+    printf("pitch: %f\n", _pitch);
     updateViewMatrix();
   }
 
@@ -50,7 +66,7 @@ namespace render
 
   void Camera::updateViewMatrix()
   {
-    /*
+
     float cosPitch = cos(_pitch);
     float sinPitch = sin(_pitch);
 
@@ -58,21 +74,14 @@ namespace render
     float sinYaw = sin(_yaw);
 
     glm::vec3 xAxis(cosYaw, 0, -sinYaw);
-    glm::vec3 yAxis(sinYaw*sinPitch, cosPitch, cosYaw);
-    glm::vec3 zAxis(sinYaw*cosPitch, -sinPitch, cosPitch);
+    glm::vec3 yAxis(sinYaw*sinPitch, cosPitch, cosYaw*sinPitch);
+    glm::vec3 zAxis(sinYaw*cosPitch, -sinPitch, cosPitch*cosYaw);
 
     viewMat = glm::mat4(
       glm::vec4(xAxis[0], yAxis[0], zAxis[0], 0),
       glm::vec4(xAxis[1], yAxis[1], zAxis[1], 0),
-      glm::vec4(xAxis[1], yAxis[1], zAxis[1], 0),
+      glm::vec4(xAxis[2], yAxis[2], zAxis[2], 0),
       glm::vec4(-glm::dot(xAxis, pos), -glm::dot(yAxis, pos), -glm::dot(zAxis, pos), 1)
-    );
-    */
-    printf("%f %f\n", pos[0], pos[1]);
-    viewMat = glm::lookAt(
-      glm::vec3(pos[0],pos[1],3),
-      glm::vec3(pos[0],pos[1],0),
-      glm::vec3(0,1,0)
     );
   }
 }

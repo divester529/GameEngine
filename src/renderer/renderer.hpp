@@ -5,7 +5,7 @@
 #include <vector>
 #include "../system/system.hpp"
 #include "../system/messageBus.hpp"
-#include "renderObject.hpp"
+#include "renderable.hpp"
 #include "camera.hpp"
 #include "../util/tileMapAsset.hpp"
 
@@ -22,7 +22,7 @@ namespace render{
     void handleMessage(messanger::Message *msg);
 
   private:
-    std::vector<RenderObject*> renderObjects;
+    std::vector<Renderable*> renderables;
     Camera* camera;
     TileMapAsset *tmTest;
     GLuint shaderProg;

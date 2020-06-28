@@ -1,16 +1,17 @@
-#ifndef RENDEROBJECT_H_INCLUDED
-#define RENDEROBJECT_H_INCLUDED
+#ifndef RENDERABLE_H_INCLUDED
+#define RENDERABLE_H_INCLUDED
 #include <GL/GLew.h>
 #include <GL/GL.h>
 #include <GLM/GLM.hpp>
+#include <vector>
 #include "transformMatrix.hpp"
 
 namespace render{
 
-  class RenderObject
+  class Renderable
   {
   public:
-    RenderObject();
+    Renderable();
 
     virtual void render();
 
@@ -22,8 +23,10 @@ namespace render{
 
     float yaw, pitch;
     glm::vec3 position;
+
+    std::vector<GLuint>* indicies;
   };
 
 }
 
-#endif // RENDEROBJECT_H_INCLUDED
+#endif // RENDERABLE_H_INCLUDED

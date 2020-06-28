@@ -27,8 +27,8 @@ struct TileMapInfo{
 class TileMapAsset
 {
 public:
-  TileMapAsset(std::string key, int width, int height, Tileset* ts);
-  TileMapAsset(std::string key, std::string path);
+  TileMapAsset(int width, int height, Tileset* ts);
+  TileMapAsset(std::string path, int width, int height, Tileset* ts);
 
   GLuint vao;
   int numVerticies;
